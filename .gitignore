@@ -1,0 +1,6 @@
+node_modules/
+release/
+main.js
+*.tsbuildinfo
+
+.DS_Store

@@ -1,0 +1,5 @@
+node_modules/
+release/
+main.js
+pnpm-lock.yaml
+vendor/
