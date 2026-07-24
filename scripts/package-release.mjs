@@ -13,7 +13,10 @@ if (
 ) {
   throw new Error("Plugin manifest version is invalid.");
 }
-const releaseTag = process.env.GITHUB_REF_NAME;
+const releaseTag =
+  process.env.GITHUB_REF_TYPE === "tag"
+    ? process.env.GITHUB_REF_NAME
+    : undefined;
 if (releaseTag && releaseTag !== manifest.version) {
   throw new Error(
     `Release tag ${releaseTag} does not match plugin version ${manifest.version}.`,
