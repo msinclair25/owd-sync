@@ -5,15 +5,23 @@ OWD Sync is the companion Obsidian plugin for
 vault you explicitly opened to an owner-controlled OWD deployment for sync,
 search, encrypted snapshots, and recovery.
 
-## Install for private-beta testing
+> **Live private beta:** OWD Sync `0.1.2` is available now through BRAT and as
+> a version-matched ZIP. It is not yet listed in Obsidian's official Community
+> Plugin directory. Submission follows successful owner and invited-family
+> testing of installation, updates, pairing, sync, backup, recovery,
+> desktop/mobile compatibility, and rollback.
 
-The dashboard provides the guided test path:
+## Start here: install the private beta
+
+You need a claimed OWD Platform deployment before pairing a vault. OWD Platform
+is the application; this repository distributes only its Obsidian companion.
 
 1. Install and enable
    [BRAT](https://github.com/TfTHacker/obsidian42-brat) from Obsidian's
    Community Plugins.
-2. In BRAT, add the beta plugin `msinclair25/owd-sync`, or use the
-   **Install OWD Sync beta** action in the authenticated OWD dashboard.
+2. In BRAT, add `https://github.com/msinclair25/owd-sync`. If your authenticated
+   OWD dashboard shows **Private beta installer**, its
+   **Install OWD Sync beta** action launches this same BRAT flow.
 3. Enable **OWD Sync** under **Settings → Community plugins**.
 
 BRAT installs and updates the published GitHub Release. No terminal or hidden
@@ -35,13 +43,14 @@ The browser link cannot open or choose an Obsidian vault. Pairing begins inside
 the vault the owner already selected, uses a ten-minute single-use grant, and
 does not expose the stored vault credential in the dashboard.
 
-## Manual fallback
+## ZIP fallback
 
 Download `owd-sync-<version>.zip` and `checksums.txt` from the matching
 [GitHub Release](https://github.com/msinclair25/owd-sync/releases/latest).
 Verify the checksum, then install the complete `owd-sync` directory as one
 version-matched unit. Do not mix `main.js`, `manifest.json`, or `styles.css`
-from different releases.
+from different releases. The ZIP is a supported manual fallback when BRAT is
+unavailable, not the normal beta installation path.
 
 ## Development
 
