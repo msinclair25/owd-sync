@@ -5,27 +5,24 @@ OWD Sync is the companion Obsidian plugin for
 vault you explicitly opened to an owner-controlled OWD deployment for sync,
 search, encrypted snapshots, and recovery.
 
-> **Live private beta:** OWD Sync `0.1.2` is available now through BRAT and as
-> a version-matched ZIP. It is not yet listed in Obsidian's official Community
-> Plugin directory. Submission follows successful owner and invited-family
-> testing of installation, updates, pairing, sync, backup, recovery,
-> desktop/mobile compatibility, and rollback.
+> **Invited family test:** OWD Sync `0.1.2` is available through BRAT while its
+> Obsidian Community Plugins review is pending. The invited tester first
+> deploys the private OWD Platform fork from its
+> [trusted-tester start page](https://github.com/msinclair25/owd-platform/blob/main/docs/TRUSTED-TESTER-START.md).
 
-## Start here: install the private beta
+## Install the invited test candidate
 
-You need a claimed OWD Platform deployment before pairing a vault. OWD Platform
-is the application; this repository distributes only its Obsidian companion.
-
-1. Install and enable
+1. Complete and claim the tester-owned OWD Platform deployment.
+2. In **Vault connections**, open **Trusted tester · one temporary step**.
+3. Install and enable
    [BRAT](https://github.com/TfTHacker/obsidian42-brat) from Obsidian's
    Community Plugins.
-2. In BRAT, add `https://github.com/msinclair25/owd-sync`. If your authenticated
-   OWD dashboard shows **Private beta installer**, its
-   **Install OWD Sync beta** action launches this same BRAT flow.
-3. Enable **OWD Sync** under **Settings → Community plugins**.
+4. Use the dashboard action to add `msinclair25/owd-sync`, then confirm
+   Obsidian shows version `0.1.2`. Stop if it differs.
+5. Enable **OWD Sync** under **Settings → Community plugins**.
 
 BRAT installs and updates the published GitHub Release. No terminal or hidden
-vault-folder work is required for the normal private-beta path.
+vault-folder work is required for this invited path.
 
 BRAT is a testing bridge, not the permanent distribution plan. OWD Sync will
 move to Obsidian's official Community Plugin directory after the private-beta
@@ -43,14 +40,14 @@ The browser link cannot open or choose an Obsidian vault. Pairing begins inside
 the vault the owner already selected, uses a ten-minute single-use grant, and
 does not expose the stored vault credential in the dashboard.
 
-## ZIP fallback
+## Diagnostic package
 
 Download `owd-sync-<version>.zip` and `checksums.txt` from the matching
-[GitHub Release](https://github.com/msinclair25/owd-sync/releases/latest).
+[OWD Sync 0.1.2 GitHub Release](https://github.com/msinclair25/owd-sync/releases/tag/0.1.2).
 Verify the checksum, then install the complete `owd-sync` directory as one
 version-matched unit. Do not mix `main.js`, `manifest.json`, or `styles.css`
-from different releases. The ZIP is a supported manual fallback when BRAT is
-unavailable, not the normal beta installation path.
+from different releases. If BRAT is blocked, stop the acceptance run. The ZIP
+is for separate maintainer diagnosis, not a substitute installation path.
 
 ## Development
 
@@ -72,7 +69,5 @@ boundary.
 
 ## License
 
-The OWD adapter is Apache-2.0 under [LICENSE](LICENSE). Vendored YAOS
-components retain their complete 0BSD terms in
-[LICENSE-UPSTREAM](LICENSE-UPSTREAM) and their provenance in
-[UPSTREAM.md](UPSTREAM.md).
+The OWD adapter is Apache-2.0. Vendored YAOS components retain their 0BSD
+notice and provenance.
