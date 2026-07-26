@@ -3,6 +3,7 @@ import VaultCrdtSyncPlugin from "../vendor/yaos-src/main";
 import {
   OwdPairingError,
   pairOwdVault,
+  parseObsidianPairingProtocol,
   parseOwdPairingLink,
   type OwdConnection,
 } from "./pairing-contract";
@@ -17,19 +18,25 @@ export default class OwdSyncPlugin extends VaultCrdtSyncPlugin {
       name: "Pair this vault with OWD",
       callback: () => this.startOwdPairing(),
     });
+
+    this.registerObsidianProtocolHandler("owd-pair", (params) => {
+      void this.handleOwdPairing(() => parseObsidianPairingProtocol(params));
+    });
   }
 
   override startOwdPairing(): void {
     const vaultName = this.app.vault.getName();
     promptForOwdPairingLink(this.app, vaultName, (link) => {
-      void this.handleOwdPairing(link);
+      void this.handleOwdPairing(() => parseOwdPairingLink(link));
     });
   }
 
-  private async handleOwdPairing(link: string): Promise<void> {
+  private async handleOwdPairing(
+    readPairing: () => ReturnType<typeof parseOwdPairingLink>,
+  ): Promise<void> {
     try {
       const outcome = await pairOwdVault(
-        parseOwdPairingLink(link),
+        readPairing(),
         this.app.vault.getName(),
         this.manifest.version,
         {

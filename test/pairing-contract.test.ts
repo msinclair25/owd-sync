@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import {
   OwdPairingError,
   pairOwdVault,
+  parseObsidianPairingProtocol,
   parseOwdPairingLink,
   parseOwdPairingParameters,
   type OwdPairingDependencies,
@@ -70,6 +71,35 @@ describe("OWD Obsidian pairing contract", () => {
       `${PAIRING_LINK}#fragment`,
     ]) {
       expect(() => parseOwdPairingLink(link)).toThrow(OwdPairingError);
+    }
+  });
+
+  it("accepts only the registered Obsidian protocol action and exact fields", () => {
+    expect(
+      parseObsidianPairingProtocol({
+        action: "owd-pair",
+        deployment: DEPLOYMENT,
+        grant: GRANT,
+      }),
+    ).toEqual({
+      deploymentUrl: DEPLOYMENT,
+      grant: GRANT,
+    });
+
+    const invalidProtocolParams: Readonly<Record<string, string>>[] = [
+      { action: "other", deployment: DEPLOYMENT, grant: GRANT },
+      {
+        action: "owd-pair",
+        deployment: DEPLOYMENT,
+        extra: "value",
+        grant: GRANT,
+      },
+      { action: "owd-pair", deployment: DEPLOYMENT },
+    ];
+    for (const params of invalidProtocolParams) {
+      expect(() => parseObsidianPairingProtocol(params)).toThrow(
+        OwdPairingError,
+      );
     }
   });
 
