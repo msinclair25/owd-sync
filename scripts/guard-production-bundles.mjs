@@ -105,13 +105,15 @@ const MAIN_FORBIDDEN = [
   "Pair another device",
   // OWD does not contact the upstream release service.
   "kavinsood/yaos/releases",
-  // Pairing must never be delegated to a global OS-level Obsidian URI handler.
-  "registerObsidianProtocolHandler",
-  "obsidian://owd-pair",
 ];
 
 const MAIN_REQUIRED = [
-  // The selected-vault flow accepts the copied grant only from inside Obsidian.
+  // Direct pairing may enter through exactly OWD's registered Obsidian action,
+  // but the plugin still displays and requires approval for the current vault.
+  "registerObsidianProtocolHandler",
+  "owd-pair",
+  "Pair and start sync",
+  // Copy/paste remains a selected-vault fallback.
   "owd-pair://connect",
   "pair-this-vault",
 ];
@@ -230,6 +232,28 @@ function scanSrcForQaImports(dir) {
   return count;
 }
 
+function checkOwdProtocolRegistration() {
+  const sourcePath = "src/main.ts";
+  const source = readFileSync(sourcePath, "utf8");
+  const registrations =
+    source.match(/registerObsidianProtocolHandler\s*\(/gu) ?? [];
+  const exactRegistration = source.includes(
+    'registerObsidianProtocolHandler("owd-pair"',
+  );
+
+  if (registrations.length !== 1 || !exactRegistration) {
+    console.error(
+      "FAIL [OWD protocol]: production must register exactly one owd-pair handler.",
+    );
+    return 1;
+  }
+
+  console.log(
+    "PASS [OWD protocol]: exactly one explicit owd-pair handler is registered.",
+  );
+  return 0;
+}
+
 // ---------------------------------------------------------------------------
 // Run
 // ---------------------------------------------------------------------------
@@ -247,6 +271,7 @@ failures += checkBundle(
   MAIN_REQUIRED,
   "main.js",
 );
+failures += checkOwdProtocolRegistration();
 const srcQaViolations = scanSrcForQaImports("src");
 if (srcQaViolations > 0) {
   console.error(

@@ -120,6 +120,27 @@ export function parseOwdPairingParameters(
   return { deploymentUrl: url.origin, grant };
 }
 
+export function parseObsidianPairingProtocol(
+  params: Readonly<Record<string, string>>,
+): OwdPairingParameters {
+  const keys = Object.keys(params);
+  if (
+    params.action !== "owd-pair" ||
+    keys.length !== 3 ||
+    !keys.includes("deployment") ||
+    !keys.includes("grant")
+  ) {
+    throw new OwdPairingError(
+      "The OWD pairing link is incomplete or malformed. Generate a new link from your dashboard.",
+    );
+  }
+
+  return parseOwdPairingParameters({
+    deployment: params.deployment ?? "",
+    grant: params.grant ?? "",
+  });
+}
+
 export function parseOwdPairingLink(value: string): OwdPairingParameters {
   const link = value.trim();
   if (

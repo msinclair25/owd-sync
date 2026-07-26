@@ -5,7 +5,7 @@ OWD Sync is the companion Obsidian plugin for
 vault you explicitly opened to an owner-controlled OWD deployment for sync,
 search, encrypted snapshots, and recovery.
 
-> **Invited family test:** OWD Sync `0.1.2` is available through BRAT while its
+> **Invited family test:** OWD Sync `0.1.3` is available through BRAT while its
 > Obsidian Community Plugins review is pending. The invited tester first
 > deploys the private OWD Platform fork from its
 > [trusted-tester start page](https://github.com/msinclair25/owd-platform/blob/main/docs/TRUSTED-TESTER-START.md).
@@ -18,7 +18,7 @@ search, encrypted snapshots, and recovery.
    [BRAT](https://github.com/TfTHacker/obsidian42-brat) from Obsidian's
    Community Plugins.
 4. Use the dashboard action to add `msinclair25/owd-sync`, then confirm
-   Obsidian shows version `0.1.2`. Stop if it differs.
+   Obsidian shows version `0.1.3`. Stop if it differs.
 5. Enable **OWD Sync** under **Settings → Community plugins**.
 
 BRAT installs and updates the published GitHub Release. No terminal or hidden
@@ -30,20 +30,22 @@ compatibility, security, mobile, update, and clean-install gates pass.
 
 ## Pair one vault safely
 
-1. In the authenticated OWD dashboard, create and copy a private pairing link.
+1. In the authenticated OWD dashboard, create a private pairing request.
 2. Open the exact vault you intend to connect.
-3. Run **OWD Sync: Pair this vault with OWD** from that vault's command palette.
-4. Paste the link and confirm the displayed current vault name, deployment
-   host, and access disclosure.
+3. Return to OWD and choose **Open Obsidian and pair**.
+4. Confirm the displayed current vault name, deployment host, and access
+   disclosure.
 
-The browser link cannot open or choose an Obsidian vault. Pairing begins inside
-the vault the owner already selected, uses a ten-minute single-use grant, and
-does not expose the stored vault credential in the dashboard.
+The protocol handoff never chooses a vault silently: the plugin displays the
+currently open vault and waits for approval. Pairing uses a ten-minute
+single-use grant and does not expose the stored vault credential in the
+dashboard. If the handoff is blocked, use OWD's **Manual fallback**, copy the
+request, run **OWD Sync: Pair this vault with OWD**, and paste it.
 
 ## Diagnostic package
 
 Download `owd-sync-<version>.zip` and `checksums.txt` from the matching
-[OWD Sync 0.1.2 GitHub Release](https://github.com/msinclair25/owd-sync/releases/tag/0.1.2).
+[OWD Sync 0.1.3 GitHub Release](https://github.com/msinclair25/owd-sync/releases/tag/0.1.3).
 Verify the checksum, then install the complete `owd-sync` directory as one
 version-matched unit. Do not mix `main.js`, `manifest.json`, or `styles.css`
 from different releases. If BRAT is blocked, stop the acceptance run. The ZIP
