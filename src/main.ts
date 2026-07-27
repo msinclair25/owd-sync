@@ -10,9 +10,9 @@ import {
 import { confirmOwdPairing, promptForOwdPairingLink } from "./pairing-modal";
 
 export default class OwdSyncPlugin extends VaultCrdtSyncPlugin {
-  override async onload(): Promise<void> {
-    await super.onload();
+  private upstreamLoad: Promise<void> = Promise.resolve();
 
+  override async onload(): Promise<void> {
     this.addCommand({
       id: "pair-this-vault",
       name: "Pair this vault with OWD",
@@ -22,6 +22,9 @@ export default class OwdSyncPlugin extends VaultCrdtSyncPlugin {
     this.registerObsidianProtocolHandler("owd-pair", (params) => {
       void this.handleOwdPairing(() => parseObsidianPairingProtocol(params));
     });
+
+    this.upstreamLoad = super.onload();
+    await this.upstreamLoad;
   }
 
   override startOwdPairing(): void {
@@ -35,6 +38,7 @@ export default class OwdSyncPlugin extends VaultCrdtSyncPlugin {
     readPairing: () => ReturnType<typeof parseOwdPairingLink>,
   ): Promise<void> {
     try {
+      await this.upstreamLoad;
       const outcome = await pairOwdVault(
         readPairing(),
         this.app.vault.getName(),
