@@ -1,4 +1,4 @@
-import { Notice, requestUrl } from "obsidian";
+import { Notice, arrayBufferToBase64, requestUrl } from "obsidian";
 import VaultCrdtSyncPlugin from "../vendor/yaos-src/main";
 import {
   OwdPairingError,
@@ -11,6 +11,7 @@ import { confirmOwdPairing, promptForOwdPairingLink } from "./pairing-modal";
 
 export default class OwdSyncPlugin extends VaultCrdtSyncPlugin {
   private upstreamLoad: Promise<void> = Promise.resolve();
+  private confirmationTail: Promise<void> = Promise.resolve();
 
   override async onload(): Promise<void> {
     this.addCommand({
@@ -25,6 +26,13 @@ export default class OwdSyncPlugin extends VaultCrdtSyncPlugin {
 
     this.upstreamLoad = super.onload();
     await this.upstreamLoad;
+    if (
+      this.settings.host.trim() !== "" &&
+      this.settings.token.trim() !== "" &&
+      this.settings.vaultId.trim() !== ""
+    ) {
+      void this.confirmCurrentSync(false);
+    }
   }
 
   override startOwdPairing(): void {
@@ -75,5 +83,62 @@ export default class OwdSyncPlugin extends VaultCrdtSyncPlugin {
       token: connection.token,
       vaultId: connection.vaultId,
     });
+    await this.confirmCurrentSync(true);
+  }
+
+  private confirmCurrentSync(showSuccess: boolean): Promise<void> {
+    const scheduled = this.confirmationTail.then(async () => {
+      const stateVector = await this.getOwdSyncConfirmationState();
+      const stateVectorBase64Url = arrayBufferToBase64(stateVector)
+        .replaceAll("+", "-")
+        .replaceAll("/", "_")
+        .replace(/=+$/u, "");
+      const response = await requestUrl({
+        body: JSON.stringify({
+          pluginVersion: this.manifest.version,
+          schemaVersion: 3,
+          stateVector: stateVectorBase64Url,
+        }),
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${this.settings.token}`,
+          "Content-Type": "application/json",
+        },
+        method: "POST",
+        throw: false,
+        url: `${this.settings.host.replace(/\/$/u, "")}/api/vaults/${encodeURIComponent(this.settings.vaultId)}/sync-confirmation`,
+      });
+      if (response.status !== 200 && response.status !== 202) {
+        const problem =
+          typeof response.json === "object" &&
+          response.json !== null &&
+          typeof Reflect.get(response.json, "error") === "object" &&
+          Reflect.get(response.json, "error") !== null
+            ? Reflect.get(Reflect.get(response.json, "error"), "message")
+            : null;
+        throw new OwdPairingError(
+          typeof problem === "string"
+            ? problem
+            : `OWD could not confirm the first sync (server status ${response.status}).`,
+        );
+      }
+      if (showSuccess) {
+        new Notice(
+          "OWD Sync connected this vault and started its searchable library.",
+          8000,
+        );
+      }
+    });
+    this.confirmationTail = scheduled.catch((error: unknown) => {
+      if (!showSuccess) {
+        new Notice(
+          error instanceof Error
+            ? `OWD Sync: ${error.message}`
+            : "OWD Sync could not confirm this vault.",
+          8000,
+        );
+      }
+    });
+    return scheduled;
   }
 }

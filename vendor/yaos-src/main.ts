@@ -84,6 +84,7 @@ import { runSchemaMigrationToV2 } from "./migrations/schemaV2";
 import { isLocalOrigin } from "./sync/origins";
 import type { EngineControlPort, DiskIngestPort } from "./runtime/engineControlPort";
 import type { BindingPropagationGate } from "./sync/editorBinding";
+import * as Y from "yjs";
 
 // Build-time constant injected by esbuild.
 //   production build (main.js):          define __YAOS_QA_HARNESS_ENABLED__ = false
@@ -284,7 +285,40 @@ export default class VaultCrdtSyncPlugin extends Plugin {
 		}
 
 		await this.setupLinkController.applyOwdConnection(params);
+		if (
+			this.settings.host.replace(/\/$/u, "") !== params.host.replace(/\/$/u, "") ||
+			this.settings.token !== params.token ||
+			this.settings.vaultId !== params.vaultId
+		) {
+			throw new Error("The new OWD vault connection was not applied.");
+		}
 		this.settingsTab?.display();
+	}
+
+	/**
+	 * OWD adapter boundary: return a state vector only after local persistence,
+	 * provider sync, reconciliation, and the server's durable receipt all agree.
+	 */
+	protected async getOwdSyncConfirmationState(): Promise<ArrayBuffer> {
+		const deadline = Date.now() + 15_000;
+		while (Date.now() < deadline) {
+			const sync = this.vaultSync;
+			if (
+				sync?.connected === true &&
+				sync.providerSynced === true &&
+				this.reconciliationController?.isReconciled === true &&
+				sync.serverAppliedLocalState === true
+			) {
+				const bytes = Y.encodeStateVector(sync.ydoc);
+				const copy = new Uint8Array(bytes.byteLength);
+				copy.set(bytes);
+				return copy.buffer;
+			}
+			await new Promise((resolve) => setTimeout(resolve, 125));
+		}
+		throw new Error(
+			"OWD has not received a durable, reconciled copy of this vault yet. Keep Obsidian open and retry.",
+		);
 	}
 
 	async onload() {
@@ -357,6 +391,11 @@ export default class VaultCrdtSyncPlugin extends Plugin {
 			updateSettings: (mutator, reason) => this.updateSettings(mutator, reason),
 		});
 		await this.loadSettings();
+		if (this.settings.maxFileSizeKB > 1024) {
+			await this.updateSettings((settings) => {
+				settings.maxFileSizeKB = 1024;
+			}, "owd-library-size-limit");
+		}
 		this.applyRuntimeSettings("load-settings");
 		const self = this;
 		this.frontmatterGuardCoordinator = new FrontmatterGuardCoordinator({

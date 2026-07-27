@@ -71,7 +71,7 @@ export const DEFAULT_SETTINGS: VaultSyncSettings = {
 	debug: false,
 	frontmatterGuardEnabled: true,
 	excludePatterns: "",
-	maxFileSizeKB: 2048,
+	maxFileSizeKB: 1024,
 	externalEditPolicy: "always",
 	enableAttachmentSync: true,
 	attachmentSyncExplicitlyConfigured: false,
