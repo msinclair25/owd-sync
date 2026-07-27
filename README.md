@@ -5,7 +5,7 @@ OWD Sync is the companion Obsidian plugin for
 vault you explicitly opened to an owner-controlled OWD deployment for sync,
 search, encrypted snapshots, and recovery.
 
-> **Invited family test:** OWD Sync `0.1.4` is available through BRAT while its
+> **Invited family test:** OWD Sync `0.1.5` is available through BRAT while its
 > Obsidian Community Plugins review is pending. The invited tester first
 > deploys the private OWD Platform fork from its
 > [trusted-tester start page](https://github.com/msinclair25/owd-platform/blob/main/docs/TRUSTED-TESTER-START.md).
@@ -18,7 +18,7 @@ search, encrypted snapshots, and recovery.
    [BRAT](https://github.com/TfTHacker/obsidian42-brat) from Obsidian's
    Community Plugins.
 4. Use the dashboard action to add `msinclair25/owd-sync`, then confirm
-   Obsidian shows version `0.1.4`. Stop if it differs.
+   Obsidian shows version `0.1.5`. Stop if it differs.
 5. Enable **OWD Sync** under **Settings → Community plugins**.
 
 BRAT installs and updates the published GitHub Release. No terminal or hidden
@@ -45,7 +45,7 @@ request, run **OWD Sync: Pair this vault with OWD**, and paste it.
 ## Diagnostic package
 
 Download `owd-sync-<version>.zip` and `checksums.txt` from the matching
-[OWD Sync 0.1.4 GitHub Release](https://github.com/msinclair25/owd-sync/releases/tag/0.1.4).
+[OWD Sync 0.1.5 GitHub Release](https://github.com/msinclair25/owd-sync/releases/tag/0.1.5).
 Verify the checksum, then install the complete `owd-sync` directory as one
 version-matched unit. Do not mix `main.js`, `manifest.json`, or `styles.css`
 from different releases. If BRAT is blocked, stop the acceptance run. The ZIP
