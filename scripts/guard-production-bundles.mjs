@@ -240,16 +240,25 @@ function checkOwdProtocolRegistration() {
   const exactRegistration = source.includes(
     'registerObsidianProtocolHandler("owd-pair"',
   );
+  const registrationIndex = source.indexOf(
+    'registerObsidianProtocolHandler("owd-pair"',
+  );
+  const upstreamLoadIndex = source.indexOf("super.onload()");
 
-  if (registrations.length !== 1 || !exactRegistration) {
+  if (
+    registrations.length !== 1 ||
+    !exactRegistration ||
+    upstreamLoadIndex === -1 ||
+    registrationIndex > upstreamLoadIndex
+  ) {
     console.error(
-      "FAIL [OWD protocol]: production must register exactly one owd-pair handler.",
+      "FAIL [OWD protocol]: production must register exactly one owd-pair handler before upstream startup.",
     );
     return 1;
   }
 
   console.log(
-    "PASS [OWD protocol]: exactly one explicit owd-pair handler is registered.",
+    "PASS [OWD protocol]: exactly one explicit owd-pair handler is registered before upstream startup.",
   );
   return 0;
 }
