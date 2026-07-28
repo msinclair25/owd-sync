@@ -4,11 +4,11 @@ OWD Sync is developed in the private OWD Platform monorepo and promoted to this
 sanitized public plugin repository while the complete platform remains in
 private beta.
 
-The current `0.1.4` public source and assets correspond to:
+The current `0.1.6` public source and assets correspond to:
 
-- OWD Platform plugin tag: `owd-sync-v0.1.4`
-- source commit: `5406b5880613c716f5b398353da546160d483d59`
-- public release tag: `0.1.4`
+- OWD Platform plugin tag: `owd-sync-v0.1.6`
+- source commit: `2322e7077c93549468c983d202ab28bb161142af`
+- public release tag: `0.1.6`
 - plugin ID: `owd-sync`
 
 The public release uses a tag exactly equal to `manifest.json`'s semantic

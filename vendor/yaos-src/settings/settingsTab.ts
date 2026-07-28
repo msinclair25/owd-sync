@@ -38,7 +38,8 @@ export interface VaultSyncSettingsHost {
 	getUpdateState(): SettingsUpdateState;
 }
 
-const CLOUDFLARE_DEPLOY_URL = "https://deploy.workers.cloudflare.com/?url=https://github.com/msinclair25/owd-platform";
+const CLOUDFLARE_DEPLOY_URL =
+	"https://deploy.workers.cloudflare.com/?url=https://github.com/msinclair25/owd-platform";
 
 /** Returns true if the host URL is unencrypted and not localhost. */
 function isInsecureRemoteHost(host: string): boolean {
@@ -220,14 +221,14 @@ export class VaultSyncSettingTab extends PluginSettingTab {
 
 			new Setting(containerEl)
 				.setName("Max text file size in kilobytes")
-				.setDesc("Text files larger than this are skipped for live document sync.")
+				.setDesc("Text files larger than this are skipped. OWD libraries support at most 1024 KB per Markdown file.")
 			.addText((text) =>
 				text
-					.setPlaceholder("2048")
+					.setPlaceholder("1024")
 					.setValue(String(this.host.settings.maxFileSizeKB))
 					.onChange(async (value) => {
 						const n = parseInt(value, 10);
-						if (!isNaN(n) && n > 0) {
+						if (!isNaN(n) && n > 0 && n <= 1024) {
 							await this.host.updateSettings((settings) => {
 								settings.maxFileSizeKB = n;
 							}, "settings:max-file-size");
