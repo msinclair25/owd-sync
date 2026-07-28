@@ -8,6 +8,7 @@ import {
   type OwdConnection,
 } from "./pairing-contract";
 import { confirmOwdPairing, promptForOwdPairingLink } from "./pairing-modal";
+import { parseObsidianMindRuntimeProfile } from "./vault-runtime-profile";
 
 export default class OwdSyncPlugin extends VaultCrdtSyncPlugin {
   private upstreamLoad: Promise<void> = Promise.resolve();
@@ -89,6 +90,7 @@ export default class OwdSyncPlugin extends VaultCrdtSyncPlugin {
   private confirmCurrentSync(showSuccess: boolean): Promise<void> {
     const scheduled = this.confirmationTail.then(async () => {
       const stateVector = await this.getOwdSyncConfirmationState();
+      const runtimeProfile = await this.readRuntimeProfile();
       const stateVectorBase64Url = arrayBufferToBase64(stateVector)
         .replaceAll("+", "-")
         .replaceAll("/", "_")
@@ -96,6 +98,7 @@ export default class OwdSyncPlugin extends VaultCrdtSyncPlugin {
       const response = await requestUrl({
         body: JSON.stringify({
           pluginVersion: this.manifest.version,
+          ...(runtimeProfile === null ? {} : { runtimeProfile }),
           schemaVersion: 3,
           stateVector: stateVectorBase64Url,
         }),
@@ -140,5 +143,17 @@ export default class OwdSyncPlugin extends VaultCrdtSyncPlugin {
       }
     });
     return scheduled;
+  }
+
+  private async readRuntimeProfile() {
+    try {
+      const manifestPath = "vault-manifest.json";
+      if (!(await this.app.vault.adapter.exists(manifestPath))) return null;
+      return parseObsidianMindRuntimeProfile(
+        await this.app.vault.adapter.read(manifestPath),
+      );
+    } catch {
+      return null;
+    }
   }
 }
