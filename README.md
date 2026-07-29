@@ -2,14 +2,40 @@
 
 [![Release](https://img.shields.io/badge/release-0.1.6-90a5ff.svg)](https://github.com/msinclair25/owd-sync/releases/tag/0.1.6)
 [![License](https://img.shields.io/badge/license-Apache--2.0-d7ff64.svg)](LICENSE)
+[![Private alpha](https://img.shields.io/badge/OWD-private%20alpha-f0a23a.svg)](https://mdevolved.com/#alpha-access)
 
-**The Obsidian companion for
-[OWD Platform](https://github.com/msinclair25/owd-platform).**
+**Keep your Obsidian vault the source. Connect only the workspace you approve.**
 
-OWD Sync connects only the vault you explicitly open and approve to one
-owner-controlled OWD workspace. It provides the sync boundary that lets OWD
-publish a searchable library, show current notes, and create encrypted recovery
-points while your canonical Markdown files remain ordinary Obsidian files.
+OWD Sync is the deliberately narrow Obsidian companion for
+[OWD Platform](https://mdevolved.com). It connects only the vault you
+explicitly open and approve to one owner-controlled OWD workspace. Your
+canonical Markdown remains ordinary Obsidian files while OWD receives the
+durable sync state it needs for searchable context, cited agent work, and
+encrypted recovery.
+
+[Request private alpha access](https://mdevolved.com/#alpha-access) ·
+[See OWD Platform](https://github.com/msinclair25/owd-platform) ·
+[Download OWD Sync 0.1.6](https://github.com/msinclair25/owd-sync/releases/tag/0.1.6)
+
+## The connection boundary
+
+```mermaid
+flowchart LR
+    V["The vault you open"] --> C["Explicit pairing consent"]
+    C --> S["OWD Sync"]
+    S <--> O["Your OWD workspace"]
+    O --> L["Current searchable library"]
+    O --> R["Encrypted recovery"]
+    O --> A["Separately authorized agents"]
+```
+
+| OWD Sync does                                              | OWD Sync never does                                       |
+| ---------------------------------------------------------- | --------------------------------------------------------- |
+| Pairs the exact open vault after explicit approval         | Silently chooses another vault                            |
+| Synchronizes eligible vault state with its OWD destination | Grants an AI agent access                                 |
+| Reports the version and safe runtime profile               | Creates, joins, or approves an OWD Project                |
+| Keeps its credential inside that vault's plugin settings   | Reads unrelated plugin credentials                        |
+| Supports current-library and recovery workflows            | Turns synchronization into an unreviewed agent write path |
 
 > [!IMPORTANT]
 > OWD Sync `0.1.6` is an alpha release. It is not yet listed in Obsidian

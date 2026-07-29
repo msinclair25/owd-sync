@@ -2,7 +2,7 @@
   "name": "owd-sync",
   "version": "0.1.6",
   "private": true,
-  "description": "The OWD Sync companion plugin for Obsidian.",
+  "description": "The explicit vault connection between Obsidian and an owner-controlled OWD workspace.",
   "license": "Apache-2.0 AND 0BSD",
   "type": "module",
   "main": "main.js",
