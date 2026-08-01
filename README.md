@@ -50,10 +50,12 @@ The normal alpha path starts in the authenticated OWD **Vaults** folder:
 1. In Obsidian, open **Settings → Community plugins** and choose
    **Turn on community plugins**. OWD cannot bypass this Obsidian security
    consent.
-2. Close Obsidian.
-3. In OWD, choose **Install OWD Sync 0.1.6**.
-4. In current Chrome or Edge, select the exact vault root in the browser's
-   folder picker and allow the requested local write access.
+2. Fully quit Obsidian with **Obsidian → Quit Obsidian** or **⌘Q**. Closing the
+   macOS window is not enough.
+3. In OWD, choose **Choose vault and install OWD Sync 0.1.6**.
+4. In current Chrome or Edge, select the exact vault root containing your notes
+   and hidden `.obsidian` folder—not `.obsidian` itself—and choose **Allow** if
+   Chrome requests local write access.
 5. Reopen Obsidian and confirm **OWD Sync** is enabled in that vault.
 6. Return to OWD and create the private pairing request.
 
@@ -70,14 +72,24 @@ change general Obsidian settings, or install an updater.
 Use [BRAT](https://github.com/TfTHacker/obsidian42-brat) as the disclosed
 fallback:
 
-1. Install and enable BRAT from Obsidian Community Plugins.
-2. Add the beta plugin repository `msinclair25/owd-sync`.
-3. Confirm Obsidian shows OWD Sync version `0.1.6`.
-4. Enable OWD Sync under **Settings → Community plugins**.
+1. Reopen the exact vault where you want OWD Sync installed.
+2. Install and enable BRAT from Obsidian Community Plugins, then wait until
+   BRAT appears in the Command Palette.
+3. Open the version-pinned
+   [OWD Sync BRAT form](obsidian://brat?plugin=msinclair25/owd-sync&version=0.1.6).
+   This link opens BRAT's form; it does not finish the installation. Verify the
+   repository and version, choose **Add Plugin**, and wait for BRAT to finish.
+4. Enable OWD Sync `0.1.6` under **Settings → Community plugins**.
 
-BRAT is a testing bridge, not the permanent install experience. OWD Sync will
-move to Obsidian Community Plugins after its compatibility, security, mobile,
-update, and clean-install gates pass.
+If the prefilled link does nothing, run **BRAT: Plugins: Add a beta plugin for
+testing (with or without version)** from the Command Palette, paste
+`https://github.com/msinclair25/owd-sync`, select `0.1.6`, and choose **Add
+Plugin**.
+
+Use either the direct installer or BRAT, not both. BRAT is a testing bridge,
+not the permanent install experience. OWD Sync will move to Obsidian Community
+Plugins after its compatibility, security, mobile, update, and clean-install
+gates pass.
 
 ## Pair one vault
 
