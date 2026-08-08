@@ -1,6 +1,6 @@
 # OWD Sync
 
-[![Release](https://img.shields.io/badge/release-0.1.6-90a5ff.svg)](https://github.com/msinclair25/owd-sync/releases/tag/0.1.6)
+[![Release](https://img.shields.io/badge/release-0.1.7-90a5ff.svg)](https://github.com/msinclair25/owd-sync/releases/tag/0.1.7)
 [![License](https://img.shields.io/badge/license-Apache--2.0-d7ff64.svg)](LICENSE)
 [![Private alpha](https://img.shields.io/badge/OWD-private%20alpha-f0a23a.svg)](https://mdevolved.com/#alpha-access)
 
@@ -15,7 +15,7 @@ encrypted recovery.
 
 [Request private alpha access](https://mdevolved.com/#alpha-access) ·
 [See OWD Platform](https://github.com/msinclair25/owd-platform) ·
-[Download OWD Sync 0.1.6](https://github.com/msinclair25/owd-sync/releases/tag/0.1.6)
+[Download OWD Sync 0.1.7](https://github.com/msinclair25/owd-sync/releases/tag/0.1.7)
 
 ## The connection boundary
 
@@ -38,7 +38,7 @@ flowchart LR
 | Supports current-library and recovery workflows            | Turns synchronization into an unreviewed agent write path |
 
 > [!IMPORTANT]
-> OWD Sync `0.1.6` is an alpha release. It is not yet listed in Obsidian
+> OWD Sync `0.1.7` is an alpha release. It is not yet listed in Obsidian
 > Community Plugins. OWD Platform provides a temporary one-click desktop
 > installer for invited testers; BRAT is the fallback. Use synthetic test
 > vaults until the Community Plugin publication and personal-vault gates pass.
@@ -52,7 +52,7 @@ The normal alpha path starts in the authenticated OWD **Vaults** folder:
    consent.
 2. Fully quit Obsidian with **Obsidian → Quit Obsidian** or **⌘Q**. Closing the
    macOS window is not enough.
-3. In OWD, choose **Choose vault and install OWD Sync 0.1.6**.
+3. In OWD, choose **Choose vault and install OWD Sync 0.1.7**.
 4. In current Chrome or Edge, select the exact vault root containing your notes
    and hidden `.obsidian` folder—not `.obsidian` itself—and choose **Allow** if
    Chrome requests local write access.
@@ -76,14 +76,14 @@ fallback:
 2. Install and enable BRAT from Obsidian Community Plugins, then wait until
    BRAT appears in the Command Palette.
 3. Open the version-pinned
-   [OWD Sync BRAT form](obsidian://brat?plugin=msinclair25/owd-sync&version=0.1.6).
+   [OWD Sync BRAT form](obsidian://brat?plugin=msinclair25/owd-sync&version=0.1.7).
    This link opens BRAT's form; it does not finish the installation. Verify the
    repository and version, choose **Add Plugin**, and wait for BRAT to finish.
-4. Enable OWD Sync `0.1.6` under **Settings → Community plugins**.
+4. Enable OWD Sync `0.1.7` under **Settings → Community plugins**.
 
 If the prefilled link does nothing, run **BRAT: Plugins: Add a beta plugin for
 testing (with or without version)** from the Command Palette, paste
-`https://github.com/msinclair25/owd-sync`, select `0.1.6`, and choose **Add
+`https://github.com/msinclair25/owd-sync`, select `0.1.7`, and choose **Add
 Plugin**.
 
 Use either the direct installer or BRAT, not both. BRAT is a testing bridge,
@@ -93,9 +93,9 @@ gates pass.
 
 ## Pair one vault
 
-1. Open the exact vault you intend to connect and confirm OWD Sync `0.1.6` is
+1. Open the exact vault you intend to connect and confirm OWD Sync `0.1.7` is
    enabled.
-2. In OWD, choose **I see OWD Sync 0.1.6 — create request**.
+2. In OWD, choose **I see OWD Sync 0.1.7 — create request**.
 3. Choose **Open Obsidian and pair**.
 4. In Obsidian, verify the current vault name and OWD workspace.
 5. Choose **Pair and start sync**.
@@ -134,14 +134,14 @@ plugin from silently expanding an agent's authority.
 
 | Component        | Required version                     |
 | ---------------- | ------------------------------------ |
-| OWD Sync         | `0.1.6`                              |
-| OWD Platform     | `1.0.0-alpha.3`                      |
+| OWD Sync         | `0.1.7`                              |
+| OWD Platform     | `1.0.0-alpha.7`                      |
 | Obsidian desktop | Current alpha-tested desktop release |
 | Direct installer | Current Chrome or Edge over HTTPS    |
 
 Do not mix `main.js`, `manifest.json`, or `styles.css` from different releases.
 The complete versioned package and SHA-256 checksums are available on the
-[OWD Sync 0.1.6 release page](https://github.com/msinclair25/owd-sync/releases/tag/0.1.6).
+[OWD Sync 0.1.7 release page](https://github.com/msinclair25/owd-sync/releases/tag/0.1.7).
 The ZIP is a maintainer diagnostic artifact, not the normal tester installation
 path.
 
@@ -149,7 +149,7 @@ path.
 
 ### Obsidian reports `unrecognized URI action`
 
-OWD Sync is not loaded at version `0.1.6` in the vault Obsidian opened. Confirm
+OWD Sync is not loaded at version `0.1.7` in the vault Obsidian opened. Confirm
 the plugin version and enabled state in that exact vault, then reopen the
 pairing request. Use OWD's manual fallback if the direct handoff remains
 blocked.

@@ -42,4 +42,4 @@ jobs:
           release/checksums.txt
           release/owd-sync-*.zip
           --generate-notes
-          --title "OWD Sync $GITHUB_REF_NAME (private beta)"
+          --title "OWD Sync $GITHUB_REF_NAME (alpha)"
